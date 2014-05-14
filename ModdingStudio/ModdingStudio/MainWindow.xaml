@@ -3,8 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mmC="http://metro.mahapps.com/winfx/xaml/controls"
         Title="{Binding Title}" Height="548.597" Width="406.493"
-        TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}">
+        TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
+        Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
     </Grid>
+    <mmC:MetroWindow.Resources>
+        <Style TargetType="{x:Type mmC:WindowButtonCommands}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type mmC:MetroWindow}}}"
+                     Value="True">
+                    <Setter Property="Foreground"
+                    Value="#FF000000"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </mmC:MetroWindow.Resources>
 </mmC:MetroWindow>
