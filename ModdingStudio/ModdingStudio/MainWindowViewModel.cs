@@ -19,13 +19,14 @@ namespace ModdingStudio.Application
         private MainWindow _view;
         private string _titleBase;
         private string _titlePre;
+        
 
         public MainWindowViewModel(MainWindow window)
         {
             this._view = window;
             this.TitlePre = "";
             this.TitleBase = defaultTitleBase;
-            this.OpenFileCommand = new OpenFileCommand();
+            this.OpenFileCommand = new OpenFileCommand(this);
         }
 
         public MainWindow View 
@@ -70,5 +71,10 @@ namespace ModdingStudio.Application
             DependencyProperty.Register("WindowBorder", typeof(Brush), typeof(MainWindowViewModel), new PropertyMetadata(defaultBorderBrush));
 
         public ICommand OpenFileCommand { get; set; }
+
+        public void DisplayFile(string p)
+        {
+            
+        }
     }
 }

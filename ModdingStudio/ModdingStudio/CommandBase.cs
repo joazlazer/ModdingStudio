@@ -7,18 +7,16 @@ using System.Windows.Input;
 
 namespace ModdingStudio.Commands
 {
-    public class CommandBase : ICommand
+    public abstract class CommandBase : ICommand
     {
-        public virtual bool CanExecute(object parameter)
+        public abstract bool CanExecute(object parameter);
+
+        public virtual event EventHandler CanExecuteChanged
         {
-            throw new NotImplementedException();
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public event EventHandler CanExecuteChanged;
-
-        public virtual void Execute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Execute(object parameter);
     }
 }
