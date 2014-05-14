@@ -1,16 +1,11 @@
-﻿<mmC:MetroWindow x:Class="ModdingStudio.Application.MainWindow"
+﻿<mmC:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mmC="http://metro.mahapps.com/winfx/xaml/controls"
-        Title="{Binding Title}" Height="548.597" Width="406.493"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ModdingStudio.Application.MainWindow"
+        Title="{Binding Title}" Height="600" Width="500"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
         Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-    </Grid>
     <mmC:MetroWindow.Resources>
         <Style TargetType="{x:Type mmC:WindowButtonCommands}">
             <Style.Triggers>
@@ -22,4 +17,38 @@
             </Style.Triggers>
         </Style>
     </mmC:MetroWindow.Resources>
+    
+    <Grid Margin="0,-4,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"  Margin="2,0,0,0">
+            <MenuItem Header="FILE" Width="43">
+                <MenuItem Header="Open">
+                    <MenuItem Header="File..." Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="Resources/Icons/OpenFile.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="EDIT" Width="44"></MenuItem>
+            <MenuItem Header="PROJECT" Width="74"></MenuItem>
+            <MenuItem Header="BUILD" Width="59"></MenuItem>
+            <MenuItem Header="TOOLS" Width="55"></MenuItem>
+            <MenuItem Header="WINDOW" Width="78"></MenuItem>
+            <MenuItem Header="HELP" Width="50"></MenuItem>
+        </Menu>
+    </Grid>
+
+    <mmC:MetroWindow.InputBindings>
+        <!--<KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveDocumentCommand}" />
+        <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAllDocumentsCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewDocumentCommand}" />
+        <KeyBinding Modifiers="Ctrl+Shift" Key="P" Command="{Binding PublishDocumentCommand}" /> -->
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}" />
+        <!--<KeyBinding Modifiers="Ctrl+Shift" Key="O" Command="{Binding OpenFromWebCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding CloseDocumentCommand}" /> -->
+    </mmC:MetroWindow.InputBindings>
 </mmC:MetroWindow>

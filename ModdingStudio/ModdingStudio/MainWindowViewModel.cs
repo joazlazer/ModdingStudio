@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ModdingStudio.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace ModdingStudio.Application
 {
@@ -23,6 +25,7 @@ namespace ModdingStudio.Application
             this._view = window;
             this.TitlePre = "";
             this.TitleBase = defaultTitleBase;
+            this.OpenFileCommand = new OpenFileCommand();
         }
 
         public MainWindow View 
@@ -64,5 +67,8 @@ namespace ModdingStudio.Application
 
         // Using a DependencyProperty as the backing store for WindowBorder.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WindowBorderProperty =
-            DependencyProperty.Register("WindowBorder", typeof(Brush), typeof(MainWindowViewModel), new PropertyMetadata(defaultBorderBrush));    }
+            DependencyProperty.Register("WindowBorder", typeof(Brush), typeof(MainWindowViewModel), new PropertyMetadata(defaultBorderBrush));
+
+        public ICommand OpenFileCommand { get; set; }
+    }
 }
