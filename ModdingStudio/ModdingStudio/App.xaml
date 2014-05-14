@@ -1,8 +1,17 @@
-﻿<Application x:Class="ModdingStudio.App"
+﻿<Application x:Class="ModdingStudio.Application.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/CustomStyles.xaml" />
+                <ResourceDictionary Source="Themes/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Themes/CustomLight.xaml"/>
+                <ResourceDictionary Source="Themes/Gray.xaml"/>
+                <ResourceDictionary Source="Themes/Brushes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

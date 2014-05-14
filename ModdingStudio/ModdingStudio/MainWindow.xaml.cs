@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ModdingStudio
+namespace ModdingStudio.Application
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
+        private MainWindowViewModel _vm;
         public MainWindow()
         {
             InitializeComponent();
+            _vm = new MainWindowViewModel(this);
+            this.DataContext = this.VM;
+        }
+
+        public MainWindowViewModel VM 
+        {
+            get { return _vm; }
+            set { _vm = value; }
         }
     }
 }

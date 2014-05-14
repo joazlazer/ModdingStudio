@@ -1,0 +1,23 @@
+
+1 Source
+
+  http://build.sharpdevelop.net/BuildArtefacts/
+  SharpDevelop_4.3.0.8857_Source.zip
+
+2 How to update ICSharpCode.AvalonEdit with newer version of SharpDevelop
+
+2.1 Search for comment marked with Dirkster99 and update new version with corresponding bugfixes
+
+2.2 Copy GlobalAssemblyInfo.cs
+    from old AvalonEdit project into new SharpDevelop AvalonEdit project into the
+    Properties folder
+   
+    Change line in
+    ICSharpCode.AvalonEdit.csproj to point directly (without link) at the GlobalAssemblyInfo.cs file
+	-------------------------------------------------------------------------
+	<Compile Include="Properties\GlobalAssemblyInfo.cs" />
+	-------------------------------------------------------------------------
+
+2.3 Update
+    Update the name and first section of this file to show the correct version
+    and source of origin for this component.
