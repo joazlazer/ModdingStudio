@@ -2,7 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mmC="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ModdingStudio.Application.MainWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
+        xmlns:adlay="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
+        mc:Ignorable="d" x:Class="ModdingStudio.Application.MainWindow"
         Title="{Binding Title}" Height="600" Width="500"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
         Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico">
@@ -40,6 +44,18 @@
             <MenuItem Header="WINDOW" Width="78"></MenuItem>
             <MenuItem Header="HELP" Width="50"></MenuItem>
         </Menu>
+        
+        <ad:DockingManager x:Name="dockingManager" Grid.Row="1">
+            <adlay:LayoutRoot PropertyChanging="LayoutRoot_PropertyChanging">
+                <adlay:LayoutPanel Orientation="Horizontal">
+                    <adlay:LayoutDocumentPaneGroup>
+                        <adlay:LayoutDocumentPane>
+
+                        </adlay:LayoutDocumentPane>
+                    </adlay:LayoutDocumentPaneGroup>
+                </adlay:LayoutPanel>
+            </adlay:LayoutRoot>
+        </ad:DockingManager>
     </Grid>
 
     <mmC:MetroWindow.InputBindings>

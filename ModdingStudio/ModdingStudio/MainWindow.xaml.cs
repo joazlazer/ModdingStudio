@@ -25,8 +25,8 @@ namespace ModdingStudio.Application
         private MainWindowViewModel _vm;
         public MainWindow()
         {
-            InitializeComponent();
             _vm = new MainWindowViewModel(this);
+            InitializeComponent();
             this.DataContext = this.VM;
         }
 
@@ -34,6 +34,11 @@ namespace ModdingStudio.Application
         {
             get { return _vm; }
             set { _vm = value; }
+        }
+
+        public void LayoutRoot_PropertyChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
+        {
+            _vm.LayoutPropChanging(sender, e);
         }
     }
 }

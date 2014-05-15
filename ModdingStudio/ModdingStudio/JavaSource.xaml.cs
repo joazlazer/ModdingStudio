@@ -21,10 +21,13 @@ namespace ModdingStudio.Documents
     public partial class JavaSource : DocumentView
     {
         private JavaSourceViewModel _vm;
-        public JavaSource()
+
+        public JavaSource(string p, string fileName)
         {
             InitializeComponent();
             _vm = new JavaSourceViewModel(this);
+            this._vm.FilePath = p;
+            this._vm.FileName = fileName;
         }
 
         private void textBox_Unloaded(object sender, RoutedEventArgs e)
@@ -37,7 +40,7 @@ namespace ModdingStudio.Documents
 
         }
 
-        public JavaSourceViewModel GetVM()
+        new public JavaSourceViewModel GetVM()
         {
             return _vm;
         }
