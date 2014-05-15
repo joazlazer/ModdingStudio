@@ -85,6 +85,7 @@
     <Compile Include="JavaSource.xaml.cs">
       <DependentUpon>JavaSource.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JavaSourceProvider.cs" />
     <Compile Include="JavaSourceViewModel.cs" />
     <Compile Include="RemovableStack%28T%29.cs" />
     <Compile Include="TextEditor.cs" />

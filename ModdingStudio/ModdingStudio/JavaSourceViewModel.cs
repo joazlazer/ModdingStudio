@@ -15,7 +15,6 @@ namespace ModdingStudio.Documents
         public JavaSourceViewModel(JavaSource view)
         {
             _view = view;
-            _view.Title = FileName;
         }
 
         new public JavaSource GetView()
@@ -26,7 +25,9 @@ namespace ModdingStudio.Documents
         public string FilePath 
         {
             get { return _filePath; }
-            set { _filePath = value; }
+            set { _filePath = value;
+            this.GetView().textBox.Text = JavaSourceProvider.readAllLinesFromFile(this.FilePath);
+            }
         }
         public string FileName 
         {

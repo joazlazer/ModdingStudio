@@ -15,7 +15,9 @@
                 <SolidColorBrush Color="#FF007ACC"/>
             </Rectangle.Fill>
         </Rectangle>
-        <msd:TextEditor x:Name="textBox" ShowLineNumbers="True" Unloaded="textBox_Unloaded" TextChanged="textBox_TextChanged" Grid.Row="1" Background="White">
+        <msd:TextEditor x:Name="textBox" ShowLineNumbers="True" Unloaded="textBox_Unloaded" 
+                        TextChanged="textBox_TextChanged" Grid.Row="1" Background="White"
+                        FontFamily="Consolas" FontSize="13.5">
 
         </msd:TextEditor>
     </Grid>
