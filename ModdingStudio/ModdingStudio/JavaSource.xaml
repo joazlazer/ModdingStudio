@@ -4,19 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:msd="clr-namespace:ModdingStudio.Documents"
-             mc:Ignorable="d">
+             mc:Ignorable="d" d:DesignWidth="179" d:DesignHeight="189">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="*"/> 
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="0">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#FF007ACC"/>
             </Rectangle.Fill>
         </Rectangle>
-        <msd:TextEditor x:Name="textBox" ShowLineNumbers="True" Unloaded="textBox_Unloaded" TextChanged="textBox_TextChanged">
-            
+        <msd:TextEditor x:Name="textBox" ShowLineNumbers="True" Unloaded="textBox_Unloaded" TextChanged="textBox_TextChanged" Grid.Row="1" Background="White">
+
         </msd:TextEditor>
     </Grid>
 </msd:DocumentView>
