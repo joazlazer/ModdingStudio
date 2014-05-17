@@ -13,7 +13,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Calendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
+        <ResourceDictionary Source="/Themes/CustomContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Expander.xaml" />
@@ -55,7 +55,7 @@
     <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MetroComboBoxItem}" />
 
     <!--    <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />-->
-    <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" />
+    <!--<Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" /> -->
     <Style TargetType="Menu" BasedOn="{StaticResource MetroMenu}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
     <Style TargetType="Expander" BasedOn="{StaticResource MetroExpander}" />

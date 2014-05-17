@@ -28,13 +28,45 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"  Margin="2,0,0,0">
-            <MenuItem Header="FILE" Width="43">
-                <MenuItem Header="Open">
+            <MenuItem Header="FILE" Width="43" VerticalContentAlignment="Center">
+                <MenuItem Header="Open" x:Name="openMI">
                     <MenuItem Header="File..." Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O">
                         <MenuItem.Icon>
                             <Image Width="16" Height="16" Source="Resources/Icons/OpenFile.png" />
                         </MenuItem.Icon>
                     </MenuItem>
+                </MenuItem>
+                <MenuItem Header="New">
+                    <MenuItem Header="Java Source (.java)">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="Resources/Icons/JavaSource.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Close Solution">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="Resources/Icons/Close.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Close"/>
+                <Separator/>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="Resources/Icons/Save.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save As...">
+                </MenuItem>
+                <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="Resources/Icons/SaveAll.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Exit" InputGestureText="Alt+F4">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="Resources/Icons/Close.png" />
+                    </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="EDIT" Width="44"></MenuItem>
