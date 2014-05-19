@@ -186,7 +186,7 @@
             <Trigger Property="Role"
                      Value="SubmenuItem">
                 <Setter Property="Padding"
-                        Value="0,3,0,2" />
+                        Value="0,4,0,4" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -345,11 +345,22 @@
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
                      TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
-            <Rectangle x:Name="Bg"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Rectangle x:Name="Bg" Grid.Row="0"
                        Fill="{TemplateBinding Background}"
-                       Margin="1"
+                       Margin="2,0,2,0"
                        Stroke="{TemplateBinding BorderBrush}"
                        StrokeThickness="1" />
+            <!--<Border Margin="0,0,0,0" x:Name="TransitionBorder" Height="2"
+                       VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                       Background="Black" SnapsToDevicePixels="False"
+                       BorderThickness="1" BorderBrush="Black">
+                <Border.Width>
+                    <Binding ElementName="Bg" Path="ActualWidth"/>
+                </Border.Width>
+            </Border> -->
             <DockPanel>
                 <ContentPresenter x:Name="Icon"
                                   ContentSource="Icon"
@@ -372,28 +383,36 @@
             <Popup x:Name="PART_Popup"
                    AllowsTransparency="True"
                    Focusable="False"
-                   HorizontalOffset="1"
+                   HorizontalOffset="-1"
                    IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                    Placement="Bottom"
-                   VerticalOffset="0">
-                <Border x:Name="LayoutRoot"
-                        Background="Transparent">
-                    <ContentControl x:Name="SubMenuBorder"
-                                    IsTabStop="False"
-                                    Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                        <ScrollViewer x:Name="SubMenuScrollViewer"
-                                      CanContentScroll="True"
-                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
-                            <ItemsPresenter x:Name="ItemsPresenter"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            Grid.IsSharedSizeScope="True"
-                                            Margin="0"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                            KeyboardNavigation.TabNavigation="Cycle" />
-                        </ScrollViewer>
-                    </ContentControl>
-                </Border>
+                   VerticalOffset="-1">
+                <Grid>
+                    <Border x:Name="LayoutRoot"
+                            Background="Transparent">
+                        <Grid>
+                            <ContentControl x:Name="SubMenuBorder"
+                                        IsTabStop="False"
+                                        Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ScrollViewer x:Name="SubMenuScrollViewer"
+                                        CanContentScroll="True"
+                                        Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                    <ItemsPresenter x:Name="ItemsPresenter"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                Grid.IsSharedSizeScope="True"
+                                                Margin="0"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                KeyboardNavigation.TabNavigation="Cycle" />
+                                </ScrollViewer>
+
+                            </ContentControl>
+                            <!--Border 3-->
+
+                        </Grid>
+                    </Border>
+
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -711,7 +730,7 @@
                                   RecognizesAccessKey="True"
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 <TextBlock Grid.Column="4"
-                           Margin="{TemplateBinding Padding}"
+                           Margin="5,2,0,2"
                            Text="{TemplateBinding InputGestureText}" />
             </Grid>
         </Grid>

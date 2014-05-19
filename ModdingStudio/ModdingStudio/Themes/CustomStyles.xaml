@@ -87,15 +87,13 @@
                             </StackPanel>
                         </Grid>
                         <Border.Effect>
-                            <DropShadowEffect
-                                    ShadowDepth="2"
-                                    Direction="315"
-                                    Color="#FF999999"
-                                    Opacity="0.5"
-                                    BlurRadius="2"/>
+                            <DropShadowEffect Color="{DynamicResource MenuShadowColor}"
+                                                      BlurRadius="4"
+                                                      ShadowDepth="2"
+                                                      Direction="315"
+                                                      Opacity="0.3" />
                         </Border.Effect>
-                    </Border>
-
+                    </Border> 
                 </Popup>
             </Grid>
         </Border>
@@ -123,13 +121,13 @@
             <!-- Role = SubMenuHeader : this is a child menu item which does not have children -->
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="DockPanel.Dock" Value="Top"/>
-                <Setter Property="Padding" Value="0,3,0,2"/>
+                <Setter Property="Padding" Value="0,4,0,4"/>
             </Trigger>
 
             <!-- Role = SubMenuItem : this is a child menu item which has children-->
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="DockPanel.Dock" Value="Top"/>
-                <Setter Property="Padding" Value="0,3,0,2"/>
+                <Setter Property="Padding" Value="0,4,0,4"/>
                 <Setter Property="Visibility" Value="Collapsed" TargetName="ArrowPanel"/>
             </Trigger>
             <Trigger Property="IsSuspendingPopupAnimation" Value="true">

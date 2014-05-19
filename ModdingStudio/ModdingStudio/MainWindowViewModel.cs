@@ -13,7 +13,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ModdingStudio.Application
 {
-    public class MainWindowViewModel : ApplicationViewModel
+    public class MainWindowViewModel : DependencyObject, IAppVM
     {
         public static string defaultTitleBase = "Modding Studio";
         public static string titleConnector = " - ";
@@ -22,7 +22,6 @@ namespace ModdingStudio.Application
         private MainWindow _view;
         private string _titleBase;
         private string _titlePre;
-        private RemovableStack<DocumentViewModel> _orderedFocusedDocs;
 
         public MainWindowViewModel(MainWindow window)
         {
@@ -30,7 +29,9 @@ namespace ModdingStudio.Application
             this.TitlePre = "";
             this.TitleBase = defaultTitleBase;
             this.OpenFileCommand = new OpenFileCommand(this);
-            this.FocusedDocuments = new RemovableStack<DocumentViewModel>();
+            this.NewJavaSourceCommand = new NewJavaSourceCommand(this);
+            this.SaveCommand = new SaveCommand(this);
+            this.ActiveDocuments.CollectionChanged += UpdateSaveTexts;
         }
 
         public MainWindow View 
@@ -76,6 +77,10 @@ namespace ModdingStudio.Application
 
         public ICommand OpenFileCommand { get; set; }
 
+        public ICommand NewJavaSourceCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+
         public void DisplayFile(string p)
         {
             string fileName = p.Substring(p.LastIndexOf("\\")).Remove(0, 1);
@@ -84,7 +89,8 @@ namespace ModdingStudio.Application
             {
                 case ".java":
                     {
-                        JavaSource java = new JavaSource(p, fileName);
+                        JavaSource java = new JavaSource(p, fileName, this);
+                        java.GetVM().OnLoaded();
                         var firstDocumentPane = View.dockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
                         if (firstDocumentPane != null)
                         {
@@ -96,34 +102,77 @@ namespace ModdingStudio.Application
             }
         }
 
-        public RemovableStack<DocumentViewModel> FocusedDocuments 
-        {
-            get { return _orderedFocusedDocs; }
-            set { _orderedFocusedDocs = value; }
-        }
-
-        public DocumentViewModel LastFocusedDocument 
-        {
-            get { return _orderedFocusedDocs.Peek(); }
-        }
-
-        public void NewLastFocusedDocument()
-        {
-            DocumentView docV = (DocumentView)this.View.dockingManager.Layout.LastFocusedDocument;
-            DocumentViewModel docVM = docV.GetVM();
-            if (FocusedDocuments.Contains(docVM))
-            {
-                FocusedDocuments.Remove(docVM);
-            }
-            FocusedDocuments.Push(docVM);
-        }
-
         public void LayoutPropChanging(object sender, System.ComponentModel.PropertyChangingEventArgs e)
         {
-            if (e.PropertyName == "LastFocusedDocument" && this.View.dockingManager.Layout.LastFocusedDocument != null && (this.View.dockingManager.Layout.LastFocusedDocument as DocumentView) != null)
+
+        }
+
+        public void newJavaSource()
+        {
+            JavaSource java = new JavaSource("Untitled.java", this);
+            java.GetVM().OnLoaded();
+            var firstDocumentPane = View.dockingManager.Layout.Descendents().OfType<LayoutDocumentPane>().FirstOrDefault();
+            if (firstDocumentPane != null)
             {
-                NewLastFocusedDocument();
+                firstDocumentPane.Children.Add(java);
+                java.IsSelected = true;
             }
+        }
+
+        public string SaveText
+        {
+            get { return (string)GetValue(SaveTextProperty); }
+            set { SetValue(SaveTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SaveText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SaveTextProperty =
+            DependencyProperty.Register("SaveText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save"));
+
+        
+
+        public RemovableStack<IDocumentView> ActiveDocuments
+        {
+            get { return (RemovableStack<IDocumentView>)GetValue(ActiveDocumentsProperty); }
+            set { SetValue(ActiveDocumentsProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ActiveDocuments.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ActiveDocumentsProperty =
+            DependencyProperty.Register("ActiveDocuments", typeof(RemovableStack<IDocumentView>), typeof(MainWindowViewModel), new PropertyMetadata(new RemovableStack<IDocumentView>()));
+
+        public void NewActiveDocument(IDocumentView newDoc)
+        {
+            if (newDoc == null) throw new ArgumentNullException();
+            if (ActiveDocuments.Contains(newDoc)) ActiveDocuments.Remove(newDoc);
+            ActiveDocuments.Push(newDoc);
+            this.TitlePre = ActiveDocument.GetVM().TitleName;
+        }
+
+        public IDocumentView ActiveDocument
+        {
+            get { return ActiveDocuments.Peek(); }
+        }
+
+        public void DocumentClosed(JavaSource newDoc)
+        {
+            if (newDoc == null) throw new ArgumentNullException();
+            if (ActiveDocuments.Contains(newDoc)) ActiveDocuments.Remove(newDoc);
+            if (ActiveDocument != null) this.TitlePre = ActiveDocument.GetVM().TitleName;
+            else this.TitlePre = "";
+        }
+
+        public void UpdateSaveTexts(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RemovableStack<IFileVM> vms = new RemovableStack<IFileVM>();
+            foreach(IDocumentView current in ActiveDocuments)
+            {
+                if ((current.GetVM() as IFileVM) != null)
+                {
+                    vms.Push(current.GetVM() as IFileVM);
+                }
+            }
+            this.SaveText = "Save " + vms.Peek().TitleName;
         }
     }
 }

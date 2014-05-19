@@ -14,7 +14,7 @@ namespace ModdingStudio
             return System.IO.File.ReadAllText(path);
         }
 
-        public static void saveAllLinesToFile(string lines, string path)
+        public static void saveAllLinesToFile(string path, string lines)
         {
             System.IO.File.WriteAllText(path, lines);
             FileInfo f = new FileInfo(path);

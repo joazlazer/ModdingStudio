@@ -1,13 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ModdingStudio.Utilities
 {
-    public class RemovableStack<T> : List<T>
+    public class RemovableStack<T> : ObservableCollection<T>
     {
+        public RemovableStack()
+        {
+            this.CollectionChanged += OnElementsChanged;
+        }
+
+        private void OnElementsChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnElementsChanged(e);
+        }
+
         new public void Add(T item) { throw new NotSupportedException(); }
         new public void AddRange(IEnumerable<T> collection) { throw new NotSupportedException(); }
         new public void Insert(int index, T item) { throw new NotSupportedException(); }
@@ -43,7 +54,9 @@ namespace ModdingStudio.Utilities
 
         public T Peek()
         {
+            if (Count != 0)
             return base[base.Count - 1];
+            return default(T);
         }
     }
 }

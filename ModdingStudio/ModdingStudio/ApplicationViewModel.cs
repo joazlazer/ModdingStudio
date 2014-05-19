@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace ModdingStudio.Application
 {
-    public class ApplicationViewModel : DependencyObject
+    public interface IAppVM
     {
 
     }

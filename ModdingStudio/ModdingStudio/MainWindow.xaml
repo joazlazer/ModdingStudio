@@ -7,7 +7,7 @@
         xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
         xmlns:adlay="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
         mc:Ignorable="d" x:Class="ModdingStudio.Application.MainWindow"
-        Title="{Binding Title}" Height="600" Width="500"
+        Title="{Binding Title}" Height="600" Width="986"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
         Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico">
     <mmC:MetroWindow.Resources>
@@ -21,14 +21,22 @@
             </Style.Triggers>
         </Style>
     </mmC:MetroWindow.Resources>
-    
+
     <Grid Margin="0,-4,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="23"/>
         </Grid.RowDefinitions>
         <Menu HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"  Margin="2,0,0,0">
             <MenuItem Header="FILE" Width="43" VerticalContentAlignment="Center">
+                <MenuItem Header="New">
+                    <MenuItem Header="Java Source (.java)" Command="{Binding NewJavaSourceCommand}">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="Resources/Icons/JavaSource.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
                 <MenuItem Header="Open" x:Name="openMI">
                     <MenuItem Header="File..." Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O">
                         <MenuItem.Icon>
@@ -36,21 +44,15 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="New">
-                    <MenuItem Header="Java Source (.java)">
-                        <MenuItem.Icon>
-                            <Image Width="16" Height="16" Source="Resources/Icons/JavaSource.png" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Close"/>
                 <MenuItem Header="Close Solution">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="Resources/Icons/Close.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Close"/>
                 <Separator/>
-                <MenuItem Header="Save" InputGestureText="Ctrl+S">
+                <MenuItem Header="{Binding SaveText}" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="Resources/Icons/Save.png" />
                     </MenuItem.Icon>
@@ -63,7 +65,7 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Exit" InputGestureText="Alt+F4">
+                <MenuItem Header="Exit" InputGestureText="Alt+F4" Click="MenuItem_Click">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="Resources/Icons/Close.png" />
                     </MenuItem.Icon>
@@ -76,18 +78,72 @@
             <MenuItem Header="WINDOW" Width="78"></MenuItem>
             <MenuItem Header="HELP" Width="50"></MenuItem>
         </Menu>
-        
-        <ad:DockingManager x:Name="dockingManager" Grid.Row="1">
-            <adlay:LayoutRoot PropertyChanging="LayoutRoot_PropertyChanging">
-                <adlay:LayoutPanel Orientation="Horizontal">
-                    <adlay:LayoutDocumentPaneGroup>
-                        <adlay:LayoutDocumentPane>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <ad:DockingManager x:Name="dockingManager" Grid.Column="1">
+                <adlay:LayoutRoot PropertyChanging="LayoutRoot_PropertyChanging">
+                    <adlay:LayoutPanel Orientation="Horizontal">
+                        <adlay:LayoutDocumentPaneGroup>
+                            <adlay:LayoutDocumentPane>
 
-                        </adlay:LayoutDocumentPane>
-                    </adlay:LayoutDocumentPaneGroup>
-                </adlay:LayoutPanel>
-            </adlay:LayoutRoot>
-        </ad:DockingManager>
+                            </adlay:LayoutDocumentPane>
+                        </adlay:LayoutDocumentPaneGroup>
+                    </adlay:LayoutPanel>
+                </adlay:LayoutRoot>
+            </ad:DockingManager>
+            <ListView Height="Auto" Width="Auto"> 
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView Height="Auto" Width="Auto" Grid.Column="2" ItemsSource="{Binding ActiveDocuments}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+
+        <Border x:Name="borderControl" Background="#FF68217a" Grid.Row="2">
+            <Grid HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="LOLALOLA Ready" VerticalContentAlignment="Center" 
+                       Foreground="White" FontSize="12" Margin="0,-2,0,0"
+                       Grid.Column="0" Width="Auto"/>
+                <Label Content="Ln 19" VerticalContentAlignment="Center" 
+                       Foreground="White" FontSize="12" Margin="0,-2,0,0"
+                       Grid.Column="2" Width="Auto" HorizontalAlignment="Right"/>
+                <Label Content="Col 33" VerticalContentAlignment="Center" 
+                       Foreground="White" FontSize="12" Margin="0,-2,0,0"
+                       Grid.Column="3" Width="Auto" HorizontalAlignment="Right"/>
+                <Label Content="Ch 35" VerticalContentAlignment="Center" 
+                       Foreground="White" FontSize="12" Margin="0,-2,0,0"
+                       Grid.Column="4" Width="Auto" HorizontalAlignment="Right"/>
+            </Grid>
+        </Border>
+        <!--<ListView HorizontalAlignment="Left" Height="338" Margin="46,63,0,0" 
+                  Grid.Row="1" VerticalAlignment="Top" Width="359" ItemsSource="{Binding FocusedDocuments}"
+                  >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView> -->
     </Grid>
 
     <mmC:MetroWindow.InputBindings>

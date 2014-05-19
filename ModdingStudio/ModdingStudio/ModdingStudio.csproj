@@ -82,12 +82,17 @@
     </ApplicationDefinition>
     <Compile Include="DocumentView.cs" />
     <Compile Include="DocumentViewModel.cs" />
+    <Compile Include="IDocumentView.cs" />
+    <Compile Include="IDocumentVM.cs" />
+    <Compile Include="IFileVM.cs" />
     <Compile Include="JavaSource.xaml.cs">
       <DependentUpon>JavaSource.xaml</DependentUpon>
     </Compile>
     <Compile Include="JavaSourceProvider.cs" />
     <Compile Include="JavaSourceViewModel.cs" />
+    <Compile Include="NewJavaSourceCommand.cs" />
     <Compile Include="RemovableStack%28T%29.cs" />
+    <Compile Include="SaveCommand.cs" />
     <Compile Include="TextEditor.cs" />
     <Page Include="JavaSource.xaml">
       <SubType>Designer</SubType>
