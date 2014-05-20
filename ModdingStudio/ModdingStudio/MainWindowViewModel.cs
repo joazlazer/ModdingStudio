@@ -31,6 +31,9 @@ namespace ModdingStudio.Application
             this.OpenFileCommand = new OpenFileCommand(this);
             this.NewJavaSourceCommand = new NewJavaSourceCommand(this);
             this.SaveCommand = new SaveCommand(this);
+            this.SaveAsCommand = new SaveAsCommand(this);
+            this.SaveAllCommand = new SaveAllCommand(this);
+            this.CloseCommand = new CloseCommand(this);
             this.ActiveDocuments.CollectionChanged += UpdateSaveTexts;
         }
 
@@ -80,6 +83,12 @@ namespace ModdingStudio.Application
         public ICommand NewJavaSourceCommand { get; set; }
 
         public ICommand SaveCommand { get; set; }
+
+        public ICommand SaveAsCommand { get; set; }
+
+        public ICommand SaveAllCommand { get; set; }
+
+        public ICommand CloseCommand { get; set; }
 
         public void DisplayFile(string p)
         {
@@ -172,7 +181,27 @@ namespace ModdingStudio.Application
                     vms.Push(current.GetVM() as IFileVM);
                 }
             }
-            this.SaveText = "Save " + vms.Peek().TitleName;
+
+            if (vms.Peek() != null)
+            { 
+                this.SaveText = "Save " + vms.Peek().TitleName;
+                this.SaveAsText = "Save " + vms.Peek().TitleName + " As...";
+            }  
+            else
+            {
+                this.SaveText = "Save";
+                this.SaveAsText = "Save As...";
+            }
         }
+
+        public string SaveAsText
+        {
+            get { return (string)GetValue(SaveAsTextProperty); }
+            set { SetValue(SaveAsTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for SaveAsText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SaveAsTextProperty =
+            DependencyProperty.Register("SaveAsText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save As..."));
     }
 }

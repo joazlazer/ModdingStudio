@@ -45,7 +45,7 @@
                     </MenuItem>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Close"/>
+                <MenuItem Header="Close" Command="{Binding CloseCommand}"/>
                 <MenuItem Header="Close Solution">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="Resources/Icons/Close.png" />
@@ -57,9 +57,9 @@
                         <Image Width="16" Height="16" Source="Resources/Icons/Save.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Save As...">
+                <MenuItem Command="{Binding SaveAsCommand}" CommandParameter="{x:Null}" Header="{Binding SaveAsText}">
                 </MenuItem>
-                <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S">
+                <MenuItem Header="Save All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="Resources/Icons/SaveAll.png" />
                     </MenuItem.Icon>
@@ -147,9 +147,9 @@
     </Grid>
 
     <mmC:MetroWindow.InputBindings>
-        <!--<KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveDocumentCommand}" />
-        <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAllDocumentsCommand}" />
-        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewDocumentCommand}" />
+        <!--<KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveDocumentCommand}" /> -->
+        <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAllCommand}" />
+        <!--<KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewDocumentCommand}" />
         <KeyBinding Modifiers="Ctrl+Shift" Key="P" Command="{Binding PublishDocumentCommand}" /> -->
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}" />
         <!--<KeyBinding Modifiers="Ctrl+Shift" Key="O" Command="{Binding OpenFromWebCommand}" />

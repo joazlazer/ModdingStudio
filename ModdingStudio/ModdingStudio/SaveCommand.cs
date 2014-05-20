@@ -24,8 +24,14 @@ namespace ModdingStudio.Commands
 
         public override void Execute(object parameter)
         {
+            
             IFileVM file = (IFileVM)_vm.ActiveDocument.GetVM();
-            file.SaveFile();
+            if (file.ExistsOnFileSystem)
+                file.SaveFile();
+            else
+            {
+                this._vm.SaveAsCommand.Execute(null);
+            }
         }
     }
 }
