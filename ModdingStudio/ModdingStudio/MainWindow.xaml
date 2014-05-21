@@ -6,10 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
         xmlns:adlay="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
-        mc:Ignorable="d" x:Class="ModdingStudio.Application.MainWindow"
+        mc:Ignorable="d" x:Class="ModdingStudio.Applications.MainWindow"
         Title="{Binding Title}" Height="600" Width="986"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
-        Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico">
+        Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded">
     <mmC:MetroWindow.Resources>
         <Style TargetType="{x:Type mmC:WindowButtonCommands}">
             <Style.Triggers>
@@ -18,6 +18,7 @@
                     <Setter Property="Foreground"
                     Value="#FF000000"/>
                 </DataTrigger>
+                
             </Style.Triggers>
         </Style>
     </mmC:MetroWindow.Resources>
@@ -31,13 +32,24 @@
         <Menu HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"  Margin="2,0,0,0">
             <MenuItem Header="FILE" Width="43" VerticalContentAlignment="Center">
                 <MenuItem Header="New">
+                    <MenuItem Header="Project..." Command="{Binding NewProjectCommand}" InputGestureText="Ctrl+Shift+N">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="Resources/Icons/NewProject.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="Java Source (.java)" Command="{Binding NewJavaSourceCommand}">
                         <MenuItem.Icon>
                             <Image Width="16" Height="16" Source="Resources/Icons/JavaSource.png" />
                         </MenuItem.Icon>
                     </MenuItem>
+
                 </MenuItem>
                 <MenuItem Header="Open" x:Name="openMI">
+                    <MenuItem Header="Project/Solution..." Command="{Binding OpenProjectSolutionCommand}" InputGestureText="Ctrl+Shift+O">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="Resources/Icons/OpenProjectSolution.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <MenuItem Header="File..." Command="{Binding OpenFileCommand}" InputGestureText="Ctrl+O">
                         <MenuItem.Icon>
                             <Image Width="16" Height="16" Source="Resources/Icons/OpenFile.png" />
@@ -72,6 +84,13 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="EDIT" Width="44"></MenuItem>
+            <MenuItem Header="VIEW" Width="48">
+                <MenuItem Header="Solution Explorer..." Command="{Binding ShowSolutionExplorerCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="Resources/Icons/SolutionExplorer.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="PROJECT" Width="74"></MenuItem>
             <MenuItem Header="BUILD" Width="59"></MenuItem>
             <MenuItem Header="TOOLS" Width="55"></MenuItem>
@@ -80,11 +99,11 @@
         </Menu>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250"/>
+                <!--<ColumnDefinition Width="250"/> -->
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
+                <!--<ColumnDefinition Width="250"/> -->
             </Grid.ColumnDefinitions>
-            <ad:DockingManager x:Name="dockingManager" Grid.Column="1">
+            <ad:DockingManager x:Name="dockingManager" Grid.Column="1" Background="#FFEEEEF2" Margin="0,-6,0,0">
                 <adlay:LayoutRoot PropertyChanging="LayoutRoot_PropertyChanging">
                     <adlay:LayoutPanel Orientation="Horizontal">
                         <adlay:LayoutDocumentPaneGroup>
@@ -92,10 +111,15 @@
 
                             </adlay:LayoutDocumentPane>
                         </adlay:LayoutDocumentPaneGroup>
+                        <adlay:LayoutAnchorablePaneGroup DockWidth="280">
+                            <adlay:LayoutAnchorablePane DockWidth="Auto">
+                                
+                            </adlay:LayoutAnchorablePane>
+                        </adlay:LayoutAnchorablePaneGroup>
                     </adlay:LayoutPanel>
                 </adlay:LayoutRoot>
             </ad:DockingManager>
-            <ListView Height="Auto" Width="Auto"> 
+            <!--<ListView Height="Auto" Width="Auto"> 
                 <ListView.View>
                     <GridView>
                         <GridViewColumn/>
@@ -108,7 +132,7 @@
                         <GridViewColumn/>
                     </GridView>
                 </ListView.View>
-            </ListView>
+            </ListView> -->
         </Grid>
 
 
@@ -121,7 +145,7 @@
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="LOLALOLA Ready" VerticalContentAlignment="Center" 
+                <Label Content="Ready" VerticalContentAlignment="Center" 
                        Foreground="White" FontSize="12" Margin="0,-2,0,0"
                        Grid.Column="0" Width="Auto"/>
                 <Label Content="Ln 19" VerticalContentAlignment="Center" 
@@ -147,12 +171,12 @@
     </Grid>
 
     <mmC:MetroWindow.InputBindings>
-        <!--<KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveDocumentCommand}" /> -->
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveCommand}" />
         <KeyBinding Modifiers="Ctrl+Shift" Key="S" Command="{Binding SaveAllCommand}" />
-        <!--<KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewDocumentCommand}" />
-        <KeyBinding Modifiers="Ctrl+Shift" Key="P" Command="{Binding PublishDocumentCommand}" /> -->
+        <KeyBinding Modifiers="Ctrl+Shift" Key="N" Command="{Binding NewProjectCommand}" />
+        <!--<KeyBinding Modifiers="Ctrl+Shift" Key="P" Command="{Binding PublishDocumentCommand}" /> -->
         <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenFileCommand}" />
-        <!--<KeyBinding Modifiers="Ctrl+Shift" Key="O" Command="{Binding OpenFromWebCommand}" />
-        <KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding CloseDocumentCommand}" /> -->
+        <KeyBinding Modifiers="Ctrl+Shift" Key="O" Command="{Binding OpenProjectSolutionCommand}" />
+        <!--<KeyBinding Modifiers="Ctrl" Key="W" Command="{Binding CloseDocumentCommand}" /> -->
     </mmC:MetroWindow.InputBindings>
 </mmC:MetroWindow>

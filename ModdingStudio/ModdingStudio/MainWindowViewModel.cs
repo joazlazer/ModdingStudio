@@ -1,17 +1,16 @@
-﻿using ModdingStudio.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
+﻿using ModdingStudio.Anchorables;
+using ModdingStudio.Commands;
 using ModdingStudio.Documents;
+using ModdingStudio.Solutions;
 using ModdingStudio.Utilities;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 using Xceed.Wpf.AvalonDock.Layout;
 
-namespace ModdingStudio.Application
+namespace ModdingStudio.Applications
 {
     public class MainWindowViewModel : DependencyObject, IAppVM
     {
@@ -22,6 +21,7 @@ namespace ModdingStudio.Application
         private MainWindow _view;
         private string _titleBase;
         private string _titlePre;
+        private Solutions.Solution _currentSolution;
 
         public MainWindowViewModel(MainWindow window)
         {
@@ -34,7 +34,12 @@ namespace ModdingStudio.Application
             this.SaveAsCommand = new SaveAsCommand(this);
             this.SaveAllCommand = new SaveAllCommand(this);
             this.CloseCommand = new CloseCommand(this);
+            this.OpenProjectSolutionCommand = new OpenProjectSolutionCommand(this);
+            this.NewProjectCommand = new NewProjectCommand(this);
+            this.ShowSolutionExplorerCommand = new ShowSolutionExplorerCommand(this);
             this.ActiveDocuments.CollectionChanged += UpdateSaveTexts;
+            this.CurrentSolution = new Solution(@"C:/Johnson.txt");
+            this.CurrentSolution.loadFromFile();
         }
 
         public MainWindow View 
@@ -90,6 +95,12 @@ namespace ModdingStudio.Application
 
         public ICommand CloseCommand { get; set; }
 
+        public ICommand OpenProjectSolutionCommand { get; set; }
+
+        public ICommand NewProjectCommand { get; set; }
+
+        public ICommand ShowSolutionExplorerCommand { get; set; }
+
         public void DisplayFile(string p)
         {
             string fileName = p.Substring(p.LastIndexOf("\\")).Remove(0, 1);
@@ -137,8 +148,6 @@ namespace ModdingStudio.Application
         // Using a DependencyProperty as the backing store for SaveText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SaveTextProperty =
             DependencyProperty.Register("SaveText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save"));
-
-        
 
         public RemovableStack<IDocumentView> ActiveDocuments
         {
@@ -203,5 +212,22 @@ namespace ModdingStudio.Application
         // Using a DependencyProperty as the backing store for SaveAsText.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SaveAsTextProperty =
             DependencyProperty.Register("SaveAsText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save As..."));
+
+        public void showSolutionExplorer()
+        {
+            SolutionExplorer solExpl = new SolutionExplorer(this);
+            solExpl.ViewModel.OnLoaded();
+            var firstAnchorablePane = View.dockingManager.Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+            if (firstAnchorablePane != null)
+            {
+                firstAnchorablePane.Children.Add(solExpl);
+            } 
+        }
+
+        public Solution CurrentSolution
+        {
+            get { return _currentSolution; }
+            set { _currentSolution = value; }
+        }
     }
 }

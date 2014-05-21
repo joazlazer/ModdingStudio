@@ -8,6 +8,7 @@
     <Color x:Key="Gray7">#FFD8D8D9</Color>
     <Color x:Key="Gray8">#FFE0E0E0</Color>
     <Color x:Key="Gray10">#FFF7F7F7</Color>
+    <Color x:Key="DisabledForeground">#FFa2a4a5</Color>
 
     <Color x:Key="GrayNormal">#FFBEBEBE</Color>
     <Color x:Key="GrayHover">#FF333333</Color>
@@ -80,7 +81,7 @@
     <SolidColorBrush x:Key="TopMenuItemSelectionStroke" Color="#FFc9def5" />
 
     <!-- original #FF9A9A9A" -->
-    <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource Gray2}" />
+    <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource DisabledForeground}" />
     <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" />
 
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource BlackColor}" />

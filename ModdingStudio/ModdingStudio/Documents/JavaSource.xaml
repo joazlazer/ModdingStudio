@@ -1,0 +1,36 @@
+﻿<ad:LayoutDocument x:Class="ModdingStudio.Documents.JavaSource"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
+             xmlns:msd="clr-namespace:ModdingStudio.Documents"
+             xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
+             mc:Ignorable="d"
+             FocusManager.FocusedElement="{Binding ElementName=textBox}"
+             IsActiveChanged="DocumentView_IsActiveChanged" IsSelectedChanged="DocumentView_IsSelectedChanged" Closed="LayoutDocument_Closed" >
+
+    <Border BorderBrush="#FFcccedb" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--<RowDefinition Height="50"/> -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!--<Rectangle Grid.Column="0" x:Name="rectA">
+            </Rectangle>
+            <Rectangle Grid.Column="1" x:Name="rectB">
+            </Rectangle> -->
+            </Grid>
+            <ae:TextEditor x:Name="textBox" ShowLineNumbers="True" Unloaded="textBox_Unloaded" 
+                        TextChanged="textBox_TextChanged" Grid.Row="1" Background="White"
+                        FontFamily="Consolas" FontSize="13">
+
+            </ae:TextEditor>
+        </Grid>
+    </Border>
+</ad:LayoutDocument>

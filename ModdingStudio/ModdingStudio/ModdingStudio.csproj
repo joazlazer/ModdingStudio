@@ -80,26 +80,58 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CloseCommand.cs" />
-    <Compile Include="DocumentViewModel.cs" />
-    <Compile Include="IDocumentView.cs" />
-    <Compile Include="IDocumentVM.cs" />
-    <Compile Include="IFileVM.cs" />
-    <Compile Include="JavaSource.xaml.cs">
+    <Compile Include="Anchorables\IAnchorableVM.cs" />
+    <Compile Include="Anchorables\IAnchorableView.cs" />
+    <Compile Include="Anchorables\SolutionExplorer.xaml.cs">
+      <DependentUpon>SolutionExplorer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Anchorables\SolutionExplorerTreeView.xaml.cs">
+      <DependentUpon>SolutionExplorerTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Anchorables\SolutionExplorerViewModel.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="Commands\NewProjectCommand.cs" />
+    <Compile Include="Commands\OpenProjectSolutionCommand.cs" />
+    <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Commands\ShowSolutionExplorerCommand.cs" />
+    <Compile Include="Documents\IDocumentView.cs" />
+    <Compile Include="Documents\IDocumentVM.cs" />
+    <Compile Include="Documents\IFileVM.cs" />
+    <Compile Include="Documents\JavaSource.xaml.cs">
       <DependentUpon>JavaSource.xaml</DependentUpon>
     </Compile>
-    <Compile Include="JavaSourceProvider.cs" />
-    <Compile Include="JavaSourceViewModel.cs" />
-    <Compile Include="NewJavaSourceCommand.cs" />
+    <Compile Include="Documents\JavaSourceProvider.cs" />
+    <Compile Include="Documents\JavaSourceViewModel.cs" />
+    <Compile Include="Commands\NewJavaSourceCommand.cs" />
+    <Compile Include="Files\TreeView\FolderTVVM.cs" />
+    <Compile Include="Files\IFile.cs" />
+    <Compile Include="Files\TreeView\WorkspaceTVVM.cs" />
+    <Compile Include="Folders\Folder.cs" />
+    <Compile Include="Projects\Project.cs" />
+    <Compile Include="Files\TreeView\ProjectTVVM.cs" />
+    <Compile Include="Files\TreeView\SolutionTVVM.cs" />
+    <Compile Include="Files\TreeView\TreeViewItemViewModel.cs" />
     <Compile Include="RemovableStack%28T%29.cs" />
-    <Compile Include="SaveAllCommand.cs" />
-    <Compile Include="SaveAsCommand.cs" />
-    <Compile Include="SaveCommand.cs" />
-    <Compile Include="StartPage.xaml.cs">
+    <Compile Include="Commands\SaveAllCommand.cs" />
+    <Compile Include="Commands\SaveAsCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Files\TreeView\ITreeViewDataModel.cs" />
+    <Compile Include="Solutions\Solution.cs" />
+    <Compile Include="Documents\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Solutions\SolutionFiles.cs" />
     <Compile Include="TextEditor.cs" />
-    <Page Include="JavaSource.xaml">
+    <Page Include="Anchorables\SolutionExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Anchorables\SolutionExplorerTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Documents\JavaSource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -112,12 +144,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationViewModel.cs" />
-    <Compile Include="CommandBase.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="StartPage.xaml">
+    <Page Include="Documents\StartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,7 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainWindowViewModel.cs" />
-    <Compile Include="OpenFileCommand.cs" />
+    <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -201,6 +233,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AvalonDock.Themes.Metro\AvalonDock.Themes.Metro.csproj">
+      <Project>{ee87b953-7dd3-4515-b86e-7d24dc0bedd9}</Project>
+      <Name>AvalonDock.Themes.Metro</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Edi\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
@@ -220,6 +256,18 @@
     <Resource Include="Resources\Icons\JavaSource.png" />
     <Resource Include="Resources\Icons\Save.png" />
     <Resource Include="Resources\Icons\SaveAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\OpenProjectSolution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\NewProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\SolutionExplorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Solution.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

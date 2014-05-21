@@ -6,12 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ModdingStudio.Application
+namespace ModdingStudio.Applications
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : System.Windows.Application
     {
+        public App()
+        {
+            Application.Instance = new Application();
+        }
     }
 }
