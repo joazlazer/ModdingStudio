@@ -108,6 +108,9 @@
     <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\TreeView\WorkspaceTVVM.cs" />
     <Compile Include="Folders\Folder.cs" />
+    <Compile Include="NewProjectDialog.xaml.cs">
+      <DependentUpon>NewProjectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Files\TreeView\ProjectTVVM.cs" />
     <Compile Include="Files\TreeView\SolutionTVVM.cs" />
@@ -153,7 +156,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Brushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Buttons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -268,6 +279,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Solution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\JavaProject.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -6,6 +6,20 @@
              xmlns:tv="clr-namespace:ModdingStudio.Files.TreeView"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="#FFf5f5f5">
+    <UserControl.Resources>
+        <Style TargetType="StackPanel" x:Key="MarginedSP">
+            <Style.Setters>
+                <Setter Property="Margin" Value="0,1,0,1"/>
+                <Setter Property="Orientation" Value="Horizontal"/>
+            </Style.Setters>
+        </Style>
+        <Style x:Key="HeaderTB" TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Margin" Value="6,0,2,0"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <TreeView ItemsSource="{Binding Solutions}">
             <TreeView.ItemContainerStyle>
@@ -14,28 +28,30 @@
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                     <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     <Setter Property="FontWeight" Value="Normal" />
+
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.Resources>
                 <HierarchicalDataTemplate 
                     DataType="{x:Type tv:SolutionTVVM}" 
                     ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Style="{StaticResource MarginedSP}">
                         <Image Width="16" Height="16" Source="/ModdingStudio;component/Resources/Icons/Solution.png"/>
-                        <TextBlock Text="{Binding SolutionName}" FontSize="11.5" FontFamily="Segoe UI"/>
+                        <TextBlock Text="{Binding SolutionName}" Style="{StaticResource HeaderTB}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
                 <HierarchicalDataTemplate 
                     DataType="{x:Type tv:ProjectTVVM}" ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding ProjectName}" />
+                    <StackPanel Style="{StaticResource MarginedSP}">
+                        <Image Width="16" Height="16" Source="/ModdingStudio;component/Resources/Icons/JavaProject.png"/>
+                        <TextBlock Text="{Binding ProjectName}" Style="{StaticResource HeaderTB}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
 
                 <HierarchicalDataTemplate DataType="{x:Type tv:FolderTVVM}" ItemsSource="{Binding Children}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding FolderName}" />
+                    <StackPanel Style="{StaticResource MarginedSP}">
+                        <TextBlock Text="{Binding FolderName}" Style="{StaticResource HeaderTB}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.Resources>

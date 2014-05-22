@@ -17,7 +17,7 @@ namespace ModdingStudio.Files.TreeView
 
         public string ProjectName
         {
-            get { return "folder"; }
+            get { return "project"; }
         }
     }
 }

@@ -7,9 +7,11 @@
         xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
         xmlns:adlay="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
         mc:Ignorable="d" x:Class="ModdingStudio.Applications.MainWindow"
+        x:Name="metroWindow"
         Title="{Binding Title}" Height="600" Width="986"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
-        Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico" Closing="MetroWindow_Closing" Loaded="MetroWindow_Loaded">
+        Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico"
+        Closing="Window_Closing" Loaded="MetroWindow_Loaded" AllowsTransparency="False">
     <mmC:MetroWindow.Resources>
         <Style TargetType="{x:Type mmC:WindowButtonCommands}">
             <Style.Triggers>
@@ -17,10 +19,14 @@
                      Value="True">
                     <Setter Property="Foreground"
                     Value="#FF000000"/>
-                </DataTrigger>
-                
+                </DataTrigger>  
             </Style.Triggers>
         </Style>
+        <Storyboard x:Key="ExitAnimation" Completed="closeStoryBoard_Completed">
+            <DoubleAnimation Storyboard.Target="{Binding ElementName='metroWindow'}"
+                             Storyboard.TargetProperty="(mmC:MetroWindow.Opacity)"
+                             Duration="0:0:1" From="1" To="0"/>
+        </Storyboard>
     </mmC:MetroWindow.Resources>
 
     <Grid Margin="0,-4,0,0">
@@ -103,7 +109,7 @@
                 <ColumnDefinition Width="*"/>
                 <!--<ColumnDefinition Width="250"/> -->
             </Grid.ColumnDefinitions>
-            <ad:DockingManager x:Name="dockingManager" Grid.Column="1" Background="#FFEEEEF2" Margin="0,-6,0,0">
+            <ad:DockingManager x:Name="dockingManager" Grid.Column="1" Background="#FFEEEEF2" Margin="0,0,0,0" Loaded="dockingManager_Loaded">
                 <adlay:LayoutRoot PropertyChanging="LayoutRoot_PropertyChanging">
                     <adlay:LayoutPanel Orientation="Horizontal">
                         <adlay:LayoutDocumentPaneGroup>

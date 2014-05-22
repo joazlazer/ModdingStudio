@@ -27,10 +27,17 @@ namespace ModdingStudio.Anchorables
         {
             InitializeComponent();
 
-
-            ITreeViewDataModel[] solutions = ((MainWindowViewModel)Application.Instance.ApplicationViewModel).CurrentSolution.Files.GetSolutions();
-            var newArray = Array.ConvertAll(solutions, item => (Solution)item);
-            WorkspaceTVVM viewModel = new WorkspaceTVVM(newArray);
+            WorkspaceTVVM viewModel;
+            if(((MainWindowViewModel)Application.Instance.ApplicationViewModel).CurrentSolution != null)
+            {
+                ITreeViewDataModel[] solutions = ((MainWindowViewModel)Application.Instance.ApplicationViewModel).CurrentSolution.Files.GetSolutions();
+                var newArray = Array.ConvertAll(solutions, item => (Solution)item);
+                viewModel = new WorkspaceTVVM(newArray);
+            }
+            else
+            {
+                viewModel = new WorkspaceTVVM();
+            }
             base.DataContext = viewModel;
         }
     }

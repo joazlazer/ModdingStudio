@@ -18,6 +18,8 @@ using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using System.IO;
 using ModdingStudio.Commands;
 using AvalonDock.Themes;
+using System.ComponentModel;
+using System.Windows.Media.Animation;
 
 namespace ModdingStudio.Applications
 {
@@ -33,7 +35,7 @@ namespace ModdingStudio.Applications
             Application.Instance.ApplicationViewModel = this.VM;
             InitializeComponent();
             this.DataContext = this.VM;
-            this.VM.showSolutionExplorer();
+            this.VM.showSolutionExplorer(false);
             this.dockingManager.Theme = new MetroTheme();
         }
 
@@ -52,8 +54,6 @@ namespace ModdingStudio.Applications
         {
             this.Close();
         }
-
-
 
         #region LoadLayoutCommand
         RelayCommand _loadLayoutCommand = null;
@@ -125,20 +125,35 @@ namespace ModdingStudio.Applications
 
         #endregion 
 
-        private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //if(this.SaveLayoutCommand.CanExecute(null))
-            //{
-            //    this.SaveLayoutCommand.Execute(null);
-            //}
-        }
-
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             /*if (this.LoadLayoutCommand.CanExecute(null))
             {
                 this.LoadLayoutCommand.Execute(null);
             }*/
+        }
+
+        private void dockingManager_Loaded(object sender, RoutedEventArgs e)
+        {
+            NewProjectDialog dlg = new NewProjectDialog();
+            dlg.ShowDialog();
+        }
+
+        private bool closeStoryBoardCompleted = false;
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (!closeStoryBoardCompleted)
+            {
+                ((Storyboard)FindResource("ExitAnimation")).Begin();
+                e.Cancel = true;
+            }
+        }
+
+        private void closeStoryBoard_Completed(object sender, EventArgs e)
+        {
+            closeStoryBoardCompleted = true;
+            this.Close();
         }
     }
 }

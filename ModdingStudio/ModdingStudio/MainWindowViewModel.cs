@@ -18,6 +18,7 @@ namespace ModdingStudio.Applications
         public static string titleConnector = " - ";
         public static Brush defaultBorderBrush = new SolidColorBrush(Color.FromRgb(104, 33, 121));
 
+        private SolutionExplorer solExp;
         private MainWindow _view;
         private string _titleBase;
         private string _titlePre;
@@ -48,15 +49,10 @@ namespace ModdingStudio.Applications
             set { _view = value; }
         }
 
-        public string Title
+        public void RefreshSE()
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
 
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata(defaultTitleBase));
+        }
 
         public string TitlePre
         {
@@ -72,34 +68,6 @@ namespace ModdingStudio.Applications
             this.Title = String.IsNullOrEmpty(this.TitlePre.Trim()) ? value : this.TitlePre + titleConnector + value;
             }
         }
-
-        public Brush WindowBorder
-        {
-            get { return (Brush)GetValue(WindowBorderProperty); }
-            set { SetValue(WindowBorderProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for WindowBorder.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty WindowBorderProperty =
-            DependencyProperty.Register("WindowBorder", typeof(Brush), typeof(MainWindowViewModel), new PropertyMetadata(defaultBorderBrush));
-
-        public ICommand OpenFileCommand { get; set; }
-
-        public ICommand NewJavaSourceCommand { get; set; }
-
-        public ICommand SaveCommand { get; set; }
-
-        public ICommand SaveAsCommand { get; set; }
-
-        public ICommand SaveAllCommand { get; set; }
-
-        public ICommand CloseCommand { get; set; }
-
-        public ICommand OpenProjectSolutionCommand { get; set; }
-
-        public ICommand NewProjectCommand { get; set; }
-
-        public ICommand ShowSolutionExplorerCommand { get; set; }
 
         public void DisplayFile(string p)
         {
@@ -138,26 +106,6 @@ namespace ModdingStudio.Applications
                 java.IsSelected = true;
             }
         }
-
-        public string SaveText
-        {
-            get { return (string)GetValue(SaveTextProperty); }
-            set { SetValue(SaveTextProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for SaveText.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SaveTextProperty =
-            DependencyProperty.Register("SaveText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save"));
-
-        public RemovableStack<IDocumentView> ActiveDocuments
-        {
-            get { return (RemovableStack<IDocumentView>)GetValue(ActiveDocumentsProperty); }
-            set { SetValue(ActiveDocumentsProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ActiveDocuments.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ActiveDocumentsProperty =
-            DependencyProperty.Register("ActiveDocuments", typeof(RemovableStack<IDocumentView>), typeof(MainWindowViewModel), new PropertyMetadata(new RemovableStack<IDocumentView>()));
 
         public void NewActiveDocument(IDocumentView newDoc)
         {
@@ -203,6 +151,39 @@ namespace ModdingStudio.Applications
             }
         }
 
+
+        public void showSolutionExplorer(bool makeActive)
+        {
+            if(solExp == null)
+            {
+                solExp = new SolutionExplorer(this);
+                solExp.ViewModel.OnLoaded();
+                var firstAnchorablePane = View.dockingManager.Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
+                if (firstAnchorablePane != null)
+                {
+                    firstAnchorablePane.Children.Add(solExp);
+                }
+            }
+            else
+            {
+                solExp.Show();
+            }
+
+            if(makeActive)
+            {
+                solExp.IsActive = true;
+                solExp.IsSelected = true;
+            }
+        }
+
+        public Solution CurrentSolution
+        {
+            get { return _currentSolution; }
+            set { _currentSolution = value; }
+        }
+
+        #region DependencyProperties
+
         public string SaveAsText
         {
             get { return (string)GetValue(SaveAsTextProperty); }
@@ -213,21 +194,68 @@ namespace ModdingStudio.Applications
         public static readonly DependencyProperty SaveAsTextProperty =
             DependencyProperty.Register("SaveAsText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save As..."));
 
-        public void showSolutionExplorer()
+        public string SaveText
         {
-            SolutionExplorer solExpl = new SolutionExplorer(this);
-            solExpl.ViewModel.OnLoaded();
-            var firstAnchorablePane = View.dockingManager.Layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault();
-            if (firstAnchorablePane != null)
-            {
-                firstAnchorablePane.Children.Add(solExpl);
-            } 
+            get { return (string)GetValue(SaveTextProperty); }
+            set { SetValue(SaveTextProperty, value); }
         }
 
-        public Solution CurrentSolution
+        // Using a DependencyProperty as the backing store for SaveText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SaveTextProperty =
+            DependencyProperty.Register("SaveText", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata("Save"));
+
+        public RemovableStack<IDocumentView> ActiveDocuments
         {
-            get { return _currentSolution; }
-            set { _currentSolution = value; }
+            get { return (RemovableStack<IDocumentView>)GetValue(ActiveDocumentsProperty); }
+            set { SetValue(ActiveDocumentsProperty, value); }
         }
+
+        // Using a DependencyProperty as the backing store for ActiveDocuments.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ActiveDocumentsProperty =
+            DependencyProperty.Register("ActiveDocuments", typeof(RemovableStack<IDocumentView>), typeof(MainWindowViewModel), new PropertyMetadata(new RemovableStack<IDocumentView>()));
+
+        public Brush WindowBorder
+        {
+            get { return (Brush)GetValue(WindowBorderProperty); }
+            set { SetValue(WindowBorderProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WindowBorder.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WindowBorderProperty =
+            DependencyProperty.Register("WindowBorder", typeof(Brush), typeof(MainWindowViewModel), new PropertyMetadata(defaultBorderBrush));
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata(defaultTitleBase));
+
+        #endregion
+
+        #region Commands
+
+        public ICommand OpenFileCommand { get; set; }
+
+        public ICommand NewJavaSourceCommand { get; set; }
+
+        public ICommand SaveCommand { get; set; }
+
+        public ICommand SaveAsCommand { get; set; }
+
+        public ICommand SaveAllCommand { get; set; }
+
+        public ICommand CloseCommand { get; set; }
+
+        public ICommand OpenProjectSolutionCommand { get; set; }
+
+        public ICommand NewProjectCommand { get; set; }
+
+        public ICommand ShowSolutionExplorerCommand { get; set; }
+
+        #endregion
     }
 }

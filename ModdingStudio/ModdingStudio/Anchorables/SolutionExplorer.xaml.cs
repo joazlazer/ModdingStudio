@@ -29,6 +29,12 @@ namespace ModdingStudio.Anchorables
         {
             InitializeComponent();
             this.ViewModel = new SolutionExplorerViewModel(this);
+            this.Closed += SolutionExplorer_Closed;
+        }
+
+        void SolutionExplorer_Closed(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
         public SolutionExplorer(Applications.MainWindowViewModel supVM)
         {
