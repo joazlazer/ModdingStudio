@@ -108,18 +108,25 @@
     <Compile Include="Files\IFile.cs" />
     <Compile Include="Files\TreeView\WorkspaceTVVM.cs" />
     <Compile Include="Folders\Folder.cs" />
+    <Compile Include="MainProjectTypes.cs" />
     <Compile Include="NewProjectDialog.xaml.cs">
       <DependentUpon>NewProjectDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NewProjectDialogViewModel.cs" />
+    <Compile Include="Projects\ForgeMods\ForgeMod.cs" />
+    <Compile Include="Projects\IProjectLifetimeHandler.cs" />
     <Compile Include="Projects\Project.cs" />
     <Compile Include="Files\TreeView\ProjectTVVM.cs" />
     <Compile Include="Files\TreeView\SolutionTVVM.cs" />
     <Compile Include="Files\TreeView\TreeViewItemViewModel.cs" />
+    <Compile Include="Projects\ProjectType.cs" />
+    <Compile Include="Projects\ProjectTypeRegistry.cs" />
     <Compile Include="RemovableStack%28T%29.cs" />
     <Compile Include="Commands\SaveAllCommand.cs" />
     <Compile Include="Commands\SaveAsCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Files\TreeView\ITreeViewDataModel.cs" />
+    <Compile Include="SolutionAction.cs" />
     <Compile Include="Solutions\Solution.cs" />
     <Compile Include="Documents\StartPage.xaml.cs">
       <DependentUpon>StartPage.xaml</DependentUpon>
@@ -282,6 +289,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\JavaProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Minecraft Mod.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\CoreMod.png" />
+    <Resource Include="Resources\Icons\MCFMod.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

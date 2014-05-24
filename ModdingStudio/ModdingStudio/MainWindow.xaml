@@ -6,12 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ad="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
         xmlns:adlay="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         mc:Ignorable="d" x:Class="ModdingStudio.Applications.MainWindow"
         x:Name="metroWindow"
         Title="{Binding Title}" Height="600" Width="986"
         TitleForeground="#FF525252" TitleCaps="False" GlowBrush="{Binding WindowBorder}" 
         Background="#FFEEEEF2" NonActiveWindowTitleBrush="#FFEEEEF2" Icon="Resources/Icons/Icon.ico"
-        Closing="Window_Closing" Loaded="MetroWindow_Loaded" AllowsTransparency="False">
+        Closing="Window_Closing" Loaded="MetroWindow_Loaded">
     <mmC:MetroWindow.Resources>
         <Style TargetType="{x:Type mmC:WindowButtonCommands}">
             <Style.Triggers>
@@ -19,13 +21,13 @@
                      Value="True">
                     <Setter Property="Foreground"
                     Value="#FF000000"/>
-                </DataTrigger>  
+                </DataTrigger>
             </Style.Triggers>
         </Style>
         <Storyboard x:Key="ExitAnimation" Completed="closeStoryBoard_Completed">
             <DoubleAnimation Storyboard.Target="{Binding ElementName='metroWindow'}"
                              Storyboard.TargetProperty="(mmC:MetroWindow.Opacity)"
-                             Duration="0:0:1" From="1" To="0"/>
+                             Duration="0:0:0.25" From="1" To="0"/>
         </Storyboard>
     </mmC:MetroWindow.Resources>
 
@@ -119,12 +121,13 @@
                         </adlay:LayoutDocumentPaneGroup>
                         <adlay:LayoutAnchorablePaneGroup DockWidth="280">
                             <adlay:LayoutAnchorablePane DockWidth="Auto">
-                                
+
                             </adlay:LayoutAnchorablePane>
                         </adlay:LayoutAnchorablePaneGroup>
                     </adlay:LayoutPanel>
                 </adlay:LayoutRoot>
             </ad:DockingManager>
+            <Button Content="New Project!" HorizontalAlignment="Left" Margin="207,48,0,0" VerticalAlignment="Top" Width="285" Height="105" FontSize="24" Click="Button_Click"/>
             <!--<ListView Height="Auto" Width="Auto"> 
                 <ListView.View>
                     <GridView>

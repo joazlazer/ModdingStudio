@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ModdingStudio;
 using System.Windows;
+using System.IO;
 
 namespace ModdingStudio.Documents
 {
@@ -44,7 +45,7 @@ namespace ModdingStudio.Documents
         {
             get { return _fileName; }
             set { _fileName = value;
-                  this._view.Title = value;
+                  this._view.Title = _isUnsaved ? value + "*" : value;
             }
         }
 
@@ -57,7 +58,7 @@ namespace ModdingStudio.Documents
             }
             else
             {
-
+                throw new InvalidOperationException("Cannot save a file when it doesn't exist on the file system! : " + this.TitleName);
             }
         }
 
@@ -126,6 +127,17 @@ namespace ModdingStudio.Documents
         public override string ToString()
         {
             return this.FileName;
+        }
+
+
+        public void SaveFile(string path)
+        {
+            IsUnsaved = false;
+            ExistsOnFileSystem = true;
+            FilePath = path;
+            string fileName = path.Substring(path.LastIndexOf("\\")).Remove(0, 1);
+            this.TitleName = fileName;
+            File.WriteAllText(path, this._view.textBox.Text);
         }
     }
 }

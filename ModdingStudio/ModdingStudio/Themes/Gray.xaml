@@ -4,9 +4,9 @@
     <Color x:Key="HighlightColor">#FFcccedb</Color>
 
     <!--80%-->
-    <Color x:Key="AccentColor">#FFeeeef2</Color>
+    <Color x:Key="AccentColor">#FF64b7da</Color>
     <!--60%-->
-    <Color x:Key="AccentColor2">#99119EDA</Color>
+    <Color x:Key="AccentColor2">#9964b7da</Color>
     <!--40%-->
     <Color x:Key="AccentColor3">#66119EDA</Color>
     <!--20%-->

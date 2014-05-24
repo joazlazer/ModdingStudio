@@ -1,6 +1,7 @@
 ﻿using ModdingStudio.Anchorables;
 using ModdingStudio.Commands;
 using ModdingStudio.Documents;
+using ModdingStudio.Projects;
 using ModdingStudio.Solutions;
 using ModdingStudio.Utilities;
 using System;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ModdingStudio.Applications
@@ -41,6 +43,7 @@ namespace ModdingStudio.Applications
             this.ActiveDocuments.CollectionChanged += UpdateSaveTexts;
             this.CurrentSolution = new Solution(@"C:/Johnson.txt");
             this.CurrentSolution.loadFromFile();
+            MainProjectTypes.RegisterAll();
         }
 
         public MainWindow View 
@@ -233,6 +236,22 @@ namespace ModdingStudio.Applications
         // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register("Title", typeof(string), typeof(MainWindowViewModel), new PropertyMetadata(defaultTitleBase));
+
+
+
+        public double BorderOpacity
+        {
+            get { return (double)GetValue(BorderOpacityProperty); }
+            set { SetValue(BorderOpacityProperty, value);
+                  this.View.GlowBrush.Opacity = value;
+                  this.View.NonActiveGlowBrush.Opacity = value;
+                  this.View.BorderBrush.Opacity = value;
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for BorderOpacity.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BorderOpacityProperty =
+            DependencyProperty.Register("BorderOpacity", typeof(double), typeof(MainWindowViewModel), new PropertyMetadata(1.0D));
 
         #endregion
 

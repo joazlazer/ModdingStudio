@@ -20,6 +20,7 @@ using ModdingStudio.Commands;
 using AvalonDock.Themes;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using System.Windows.Markup;
 
 namespace ModdingStudio.Applications
 {
@@ -29,14 +30,29 @@ namespace ModdingStudio.Applications
     public partial class MainWindow : MetroWindow
     {
         private MainWindowViewModel _vm;
+        private Boolean isFading = false;
+
         public MainWindow()
         {
             _vm = new MainWindowViewModel(this);
             Application.Instance.ApplicationViewModel = this.VM;
             InitializeComponent();
+            this.AllowsTransparency = true;
             this.DataContext = this.VM;
             this.VM.showSolutionExplorer(false);
             this.dockingManager.Theme = new MetroTheme();
+        }
+
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+            if(e.Property.Name == "Opacity" && isFading)
+            {
+                double newOpac = (double)e.NewValue;
+                SolidColorBrush brush = this.GlowBrush.CloneCurrentValue();
+                brush.Opacity = newOpac;
+                this.GlowBrush = brush;
+            }
         }
 
         public MainWindowViewModel VM 
@@ -135,8 +151,7 @@ namespace ModdingStudio.Applications
 
         private void dockingManager_Loaded(object sender, RoutedEventArgs e)
         {
-            NewProjectDialog dlg = new NewProjectDialog();
-            dlg.ShowDialog();
+
         }
 
         private bool closeStoryBoardCompleted = false;
@@ -146,6 +161,7 @@ namespace ModdingStudio.Applications
             if (!closeStoryBoardCompleted)
             {
                 ((Storyboard)FindResource("ExitAnimation")).Begin();
+                this.isFading = true;
                 e.Cancel = true;
             }
         }
@@ -154,6 +170,13 @@ namespace ModdingStudio.Applications
         {
             closeStoryBoardCompleted = true;
             this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NewProjectDialog dlg = new NewProjectDialog();
+            dlg.Owner = this;
+            dlg.ShowDialog();
         }
     }
 }

@@ -27,6 +27,7 @@ namespace ModdingStudio.Commands
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.CheckFileExists = true;
             dlg.Title = "Open File";
+            
             dlg.Filter = "Java Source Files (*.java)|*.java|All Files(*.*)|*.*";
             dlg.Multiselect = false;
 
