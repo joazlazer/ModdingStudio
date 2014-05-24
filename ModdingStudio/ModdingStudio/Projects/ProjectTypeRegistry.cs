@@ -21,7 +21,7 @@ namespace ModdingStudio.Projects
         }
 
         /// <summary>
-        /// A method to register a type of property.
+        /// A method to register a type of project.
         /// 
         /// Note that in any place where a project type is used,
         /// ProjectType typeA;
@@ -29,7 +29,7 @@ namespace ModdingStudio.Projects
         /// (typeUsedInContext == typeA) is always true
         /// </summary>
         /// <param name="typeToRegister"></param>
-        public static void RegisterPropertyType(ProjectType typeToRegister)
+        public static void RegisterProjectType(ProjectType typeToRegister)
         {
             if (typeToRegister == null) throw new ArgumentNullException();
             if (String.IsNullOrEmpty(typeToRegister.ID.Trim())) throw new ArgumentException("New project type to be registered's ID string is Null! This is... Unacceptable!!!");

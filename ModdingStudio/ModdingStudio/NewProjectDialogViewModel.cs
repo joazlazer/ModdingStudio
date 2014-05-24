@@ -132,6 +132,7 @@ namespace ModdingStudio
             this.CurrentPropertyType = pt.Type;
             this.SolutionName = pt.ManipulatedDPN;
             this.ProjectName = pt.ManipulatedDPN;
+            this.CurrentPropertyDescription = pt.Description;
         }
     }
 }

@@ -27,6 +27,6 @@ namespace ModdingStudio.Projects
             }
         }
 
-
+        public string Description { get; set; }
     }
 }
