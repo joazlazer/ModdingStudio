@@ -6,22 +6,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using ModdingStudio.Projects;
 using System.Collections.ObjectModel;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using ModdingStudio.Applications;
 
 namespace ModdingStudio
 {
     public class NewProjectDialogViewModel : DependencyObject
     {
-        private NewProjectDialog _view;
+        private bool textChanged = false;
+        private bool changingSolName;
 
-        public NewProjectDialog View
+        public NewProjectDialogViewModel()
         {
-            get { return _view; }
-            set { _view = value; }
-        }
-
-        public NewProjectDialogViewModel(NewProjectDialog view)
-        {
-            this.View = view;
                    ProjectTypeRegistry.TypesChanged += OnProjectsChanged;
             foreach (KeyValuePair<string, ProjectType> typePair in ProjectTypeRegistry.RegisteredTypes)
             {
@@ -30,6 +26,7 @@ namespace ModdingStudio
                     if(!ProjectTypes.Contains(typePair.Value)) ProjectTypes.Add(typePair.Value);
                 }
             }
+            ProjectLocation = Workspace.DefaultProjectDirectory;
         }
 
         public void OnProjectsChanged(EventArgs e, ProjectType p)
@@ -82,7 +79,17 @@ namespace ModdingStudio
         public string ProjectName
         {
             get { return (string)GetValue(ProjectNameProperty); }
-            set { SetValue(ProjectNameProperty, value); }
+            set 
+            { 
+                SetValue(ProjectNameProperty, value);
+                if (textChanged == true) { }
+                else
+                {
+                    changingSolName = true;
+                    SolutionName = value;
+                    changingSolName = false;
+                }
+            }
         }
 
         // Using a DependencyProperty as the backing store for ProjectName.  This enables animation, styling, binding, etc...
@@ -107,12 +114,22 @@ namespace ModdingStudio
 
         // Using a DependencyProperty as the backing store for SolutionAction.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SolutionActionProperty =
-            DependencyProperty.Register("SolutionAction", typeof(SolutionAction), typeof(NewProjectDialogViewModel), new PropertyMetadata(SolutionAction.Create_New_Solution));
+            DependencyProperty.Register("SolutionAction", typeof(SolutionAction), typeof(NewProjectDialogViewModel), new PropertyMetadata(SolutionAction.CreateNewSolution));
 
         public string SolutionName
         {
             get { return (string)GetValue(SolutionNameProperty); }
-            set { SetValue(SolutionNameProperty, value); }
+            set 
+            { 
+                SetValue(SolutionNameProperty, value);
+                if (changingSolName == false) textChanged = true;
+            }
+        }
+
+        private Boolean TextChanged
+        {
+            get { return textChanged; }
+            set { textChanged = value; }
         }
 
         // Using a DependencyProperty as the backing store for SolutionName.  This enables animation, styling, binding, etc...
@@ -123,16 +140,47 @@ namespace ModdingStudio
 
         public void onBrowseClicked()
         {
+            string currentDirectory = Workspace.DefaultProjectDirectory;
+            var dlg = new CommonOpenFileDialog();
+            dlg.Title = "Select Location";
+            dlg.IsFolderPicker = true;
+            dlg.InitialDirectory = currentDirectory;
 
+            dlg.AddToMostRecentlyUsedList = false;
+            dlg.AllowNonFileSystemItems = false;
+            dlg.DefaultDirectory = currentDirectory;
+            dlg.EnsureFileExists = true;
+            dlg.EnsurePathExists = true;
+            dlg.EnsureReadOnly = false;
+            dlg.EnsureValidNames = true;
+            dlg.Multiselect = false;
+            dlg.ShowPlacesList = true;
+
+            if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                string folder = dlg.FileName;
+                ProjectLocation = folder;
+            }
         }
 
         public void OnListSelectionChanged(System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ProjectType pt = (ProjectType)e.AddedItems[0];
             this.CurrentPropertyType = pt.Type;
+            changingSolName = true;
             this.SolutionName = pt.ManipulatedDPN;
+            changingSolName = false;
             this.ProjectName = pt.ManipulatedDPN;
             this.CurrentPropertyDescription = pt.Description;
+        }
+
+        public IEnumerable<SolutionAction> SolutionActions
+        {
+            get
+            {
+                return Enum.GetValues(typeof(SolutionAction))
+                    .Cast<SolutionAction>();
+            }
         }
     }
 }

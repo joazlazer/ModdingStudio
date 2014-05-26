@@ -16,6 +16,7 @@ namespace ModdingStudio.Applications
         public App()
         {
             Application.Instance = new Application();
+            Workspace.Init();
         }
     }
 }

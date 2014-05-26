@@ -19,10 +19,11 @@ namespace ModdingStudio.Projects
         /// </summary>
         public static void RegisterAll()
         {
-            Reg("aabba", "Forge Mod", "Java", "ForgeMod", @"/ModdingStudio;component/Resources/Icons/MCFMod.png", "A blank mod that uses Minecraft Forge to interact with Minecraft, allowing for compatibility for other mods. Most mods are of this type.");
+            Reg(new ForgeMods.ForgeMod());
+            //Reg("aabba", "Forge Mod", "Java", "ForgeMod", @"/ModdingStudio;component/Resources/Icons/MCFMod.png", "A blank mod that uses Minecraft Forge to interact with Minecraft, allowing for compatibility for other mods. Most mods are of this type.");
 
             //This eventually will be implemented.
-            Reg("aabbc", "Forge Core Mod", "Java", "CoreMod", @"/ModdingStudio;component/Resources/Icons/CoreMod.png");
+            //Reg("aabbc", "Forge Core Mod", "Java", "CoreMod", @"/ModdingStudio;component/Resources/Icons/CoreMod.png");
         }
 
         /// <summary>
@@ -105,6 +106,11 @@ namespace ModdingStudio.Projects
         {
             ProjectType pt = AddThumbnail(thumbLocation, InitType(id, name, type, defaultPN));
             pt.Description = description;
+            Register(pt);
+        }
+
+        public static void Reg(ProjectType pt)
+        {
             Register(pt);
         }
     }

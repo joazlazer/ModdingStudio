@@ -30,7 +30,7 @@ namespace ModdingStudio
             InitializeComponent();
             this.TitleCaps = false;
             this.TitleForeground = new SolidColorBrush(Colors.Black);
-            this._vm = new NewProjectDialogViewModel(this);
+            this._vm = new NewProjectDialogViewModel();
             this.AllowsTransparency = true;
             this.DataContext = _vm;
 
@@ -73,7 +73,7 @@ namespace ModdingStudio
 
         private void projectName_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            _vm.ProjectName = projectName.Text;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -84,6 +84,16 @@ namespace ModdingStudio
         private void projectList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _vm.OnListSelectionChanged(e);
+        }
+
+        private void projectLoc_TextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
+
+        private void solutionName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _vm.SolutionName = solutionName.Text;
         }
     }
 }
